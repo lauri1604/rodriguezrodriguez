@@ -1,6 +1,11 @@
 import os
+from operator import truediv
+
 from PyQt6 import QtSql, QtWidgets, QtCore
 import sqlite3
+
+from PyQt6.QtCore import QVariant
+
 import var
 from datetime import datetime
 class Conexion:
@@ -254,7 +259,7 @@ class Conexion:
         try:
             registro = []
             query = QtSql.QSqlQuery()
-            query.prepare("SELECT * from TIPOPROPIEDAD ASC")
+            query.prepare("SELECT * from TIPOPROPIEDAD ORDER BY tipo ASC")
             if query.exec():
                 while query.next():
                     registro.append(str(query.value(0)))
@@ -265,11 +270,117 @@ class Conexion:
     def altaPropiedad(propiedad):
         try:
             query = QtSql.QSqlQuery()
-            query.prepare("INSERT into PROPIEDADES (altaprop, dirprop, provprop, muniprop, tipoprop, habprop, banprop, "
-                          " supeprop, prealquiprop, prevenprop, cpprop, obserprop, tipooper, estadoprop, nomeprop, movilprop ) "
-                          " VALUES (:altaprop, :dirprop, :provprop, :muniprop, :tipprop, :habprop, :banprop, :superprop,"
-                          " :prealquiprop, :prevenprop, :cpprop, :obserprop, :tipooper, :estadoprop, :nomeprop, :movilprop) "
+            query.prepare("INSERT into PROPIEDADES(altaprop, dirprop, provprop, muniprop, tipoprop, habprop, banprop, "
+                          " superprop, prealquiprop, prevenprop, cpprop, obserprop, tipooper, estadoprop, nomeprop, movilprop) "
+                          " VALUES (:altaprop, :dirprop, :provprop, :muniprop, :tipoprop, :habprop, :banprop, :superprop, "
+                          " :prealquiprop, :prevenprop, :cpprop, :obserprop, :tipooper, :estadoprop, :nomeprop, :movilprop)"
             )
+            query.bindValue(":altaprop", str(propiedad[0]))
+            query.bindValue(":dirprop", str(propiedad[1]))
+            query.bindValue(":provprop", str(propiedad[2]))
+            query.bindValue(":muniprop", str(propiedad[3]))
+            query.bindValue(":tipoprop", str(propiedad[4]))
+            query.bindValue(":habprop", int(propiedad[5]))
+            query.bindValue(":banprop", int(propiedad[6]))
+            query.bindValue(":superprop", str(propiedad[7]))
+            query.bindValue(":prealquiprop", str(propiedad[8]))
+            query.bindValue(":prevenprop", str(propiedad[9]))
+            query.bindValue(":cpprop", str(propiedad[10]))
+            query.bindValue(":obserprop", str(propiedad[11]))
+            query.bindValue(":tipooper", str(propiedad[12]))
+            query.bindValue(":estadoprop", str(propiedad[13]))
+            query.bindValue(":nomeprop", str(propiedad[14]))
+            query.bindValue(":movilprop", str(propiedad[15]))
+            if query.exec():
+                return True
+            elif not query.exec():
+                print(query.lastError().text())
+                return False
+        except Exception as error:
+            print("error alta propiedad en conexion", error)
 
+    def listadoPropiedades(self):
+        try:
+            listado = []
+            if var.historiaprop == 1:
+                query = QtSql.QSqlQuery()
+                query.prepare("SELECT * FROM PROPIEDADES WHERE bajaprop is NULL ORDER BY muniprop ASC")
+                if query.exec():
+                    while query.next():
+                        fila = [query.value(i) for i in range(query.record().count())]
+                        listado.append(fila)
+                return listado
+            elif var.historiaprop == 0:
+                query = QtSql.QSqlQuery()
+                query.prepare("SELECT * FROM PROPIEDADES ORDER BY muniprop ASC")
+                if query.exec():
+                    while query.next():
+                        fila = [query.value(i) for i in range(query.record().count())]
+                        listado.append(fila)
+                return listado
+        except Exception as error:
+            print("error listado propiedades en conexion", error)
+
+    def bajaPropiedad(fecha, codigo, estado):
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare("UPDATE propiedades set bajaprop = :fecha, estadoprop = :estado where codigo = :codigo")
+            query.bindValue(":fecha", str(fecha))
+            query.bindValue(":codigo", str(codigo))
+            query.bindValue(":estado", str(estado))
+            if query.exec():
+                return True
+        except Exception as error:
+            print("error baja propiedad en conexion", error)
+
+    def cargaOnepropiedad(codigo):
+        try:
+            registro = []
+            query = QtSql.QSqlQuery()
+            query.prepare("SELECT * FROM PROPIEDADES where codigo = :codigo")
+            query.bindValue(":codigo", int(codigo))
+            if query.exec():
+                while query.next():
+                    for i in range(query.record().count()):
+                        registro.append(str(query.value(i)))
+            return registro
+        except Exception as error:
+            print("error carga propiedad en conexion", error)
+
+    def modifPropiedad(propiedad):
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare(
+                "UPDATE PROPIEDADES SET altaprop = :altaprop, bajaprop = :bajaprop, dirprop = :dirprop, provprop = :provprop, "
+                " muniprop = :muniprop, tipoprop = :tipoprop, habprop = :habprop, banprop = :banprop, superprop = :superprop, "
+                " prealquiprop = :prealquiprop, prevenprop = :prevenprop, cpprop = :cpprop, obserprop = :obserprop, "
+                " tipooper = :tipooper, estadoprop = :estadoprop, nomeprop = :nomeprop, movilprop = :movilprop "
+                " WHERE codigo = :codigo")
+            query.bindValue(":codigo", int(propiedad[0]))
+            query.bindValue(":altaprop", str(propiedad[1]))
+            if propiedad[2] == "":
+                query.bindValue(":bajaprop",QtCore.QVariant())
+            else:
+                query.bindValue(":bajaprop", str(propiedad[2]))
+            query.bindValue(":dirprop", str(propiedad[3]))
+            query.bindValue(":provprop", str(propiedad[4]))
+            query.bindValue(":muniprop", str(propiedad[5]))
+            query.bindValue(":tipoprop", str(propiedad[6]))
+            query.bindValue(":habprop", int(propiedad[7]))
+            query.bindValue(":banprop", int(propiedad[8]))
+            query.bindValue(":superprop", str(propiedad[9]))
+            query.bindValue(":prealquiprop", str(propiedad[10]))
+            query.bindValue(":prevenprop", str(propiedad[11]))
+            query.bindValue(":cpprop", str(propiedad[12]))
+            query.bindValue(":obserprop", str(propiedad[13]))
+            query.bindValue(":tipooper", str(propiedad[14]))
+            query.bindValue(":estadoprop", str(propiedad[15]))
+            query.bindValue(":nomeprop", str(propiedad[16]))
+            query.bindValue(":movilprop", str(propiedad[17]))
+            if query.exec():
+                return True
+            elif not query.exec():
+                print(query.lastError().text())
+                return False
         except Exception as error:
             print("error alta propiedad en conexion", error)

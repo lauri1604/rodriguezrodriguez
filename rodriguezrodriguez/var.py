@@ -10,3 +10,4 @@ global btn
 global historico
 global dlggestion
 global tipo
+global historiaprop

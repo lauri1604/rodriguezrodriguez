@@ -6,6 +6,9 @@ import eventos
 import var
 from PyQt6 import QtWidgets, QtGui, QtCore
 
+from propiedades import Propiedades
+
+
 class Clientes:
     def checkDNI(dni):
         try:
@@ -70,6 +73,7 @@ class Clientes:
                 mbox.setWindowIcon(QtGui.QIcon('./img/logo.ico'))
                 mbox.setText('Error Faltan Datos o Cliente Existe')
                 mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Cancel)
+                mbox.button(QtWidgets.QMessageBox.StandardButton.Cancel).setText('Cancelar')
                 mbox.exec()
         except Exception as e:
             print("error alta cliente", e)
@@ -199,10 +203,10 @@ class Clientes:
     def historicoCli(self):
         try:
             if var.ui.chkHistoriacli.isChecked():
-                var.historico = 0
+                var.historiaprop = 0
             else:
-                var.historico = 1
-            Clientes.cargaTablaClientes(self)
+                var.historiaprop = 1
+            Propiedades.cargaTablaPropiedades(self)
         except exception as Error:
             print("checkbox histórico", Error)
 

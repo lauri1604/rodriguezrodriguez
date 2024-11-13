@@ -1,3 +1,5 @@
+from xml.etree.ElementPath import prepare_parent
+
 from venPrincipal import *
 from venAux import *
 import sys
@@ -21,8 +23,10 @@ class Main(QtWidgets.QMainWindow):
         self.setStyleSheet(styles.load_stylesheet())
         conexion.Conexion.db_conexion(self)
         var.historico = 1
+        var.historiaprop = 1
         #conexionserver.ConexionServer.crear_conexion(self)
         clientes.Clientes.cargaTablaClientes(self)
+        propiedades.Propiedades.cargaTablaPropiedades(self)
 
         '''
         eventos de tablas
@@ -31,16 +35,22 @@ class Main(QtWidgets.QMainWindow):
         eventos.Eventos.resizeTablaPropiedades(self)
 
         var.ui.tablaClientes.clicked.connect(clientes.Clientes.cargaOneCliente)
+        var.ui.tablaPropiedades.clicked.connect(propiedades.Propiedades.cargaOnepropiedad)
 
 
         '''
         
-        zona de eventos del menubar
+        zona de eventos del menubar y toolbar
         '''
         var.ui.actionSalir.triggered.connect(eventos.Eventos.mensajeSalir)
         var.ui.actionCrear_Backup.triggered.connect(eventos.Eventos.crearBackup)
         var.ui.actionRestaurar_Backup.triggered.connect(eventos.Eventos.restaurarBackup)
         var.ui.actionTipo_Propiedades.triggered.connect(eventos.Eventos.abrirTipoprop)
+        var.ui.actionTipoPropiedades.triggered.connect(eventos.Eventos.abrirTipoprop)
+        var.ui.actionbarSalir.triggered.connect(eventos.Eventos.mensajeSalir)
+        var.ui.actionbarLimpiar.triggered.connect(eventos.Eventos.limpiarPanel)
+        var.ui.actionactionBuscaprop.triggered.connect(propiedades.Propiedades.buscaProp)
+
 
         '''
         
@@ -54,6 +64,9 @@ class Main(QtWidgets.QMainWindow):
         var.ui.btnModifcli.clicked.connect(clientes.Clientes.modifCliente)
         var.ui.btnDelcli.clicked.connect(clientes.Clientes.bajaCliente)
         var.ui.btnGrabarprop.clicked.connect(propiedades.Propiedades.altaPropiedad)
+        var.ui.btnDelprop.clicked.connect(propiedades.Propiedades.bajaPropiedad)
+        var.ui.btnModifprop.clicked.connect(propiedades.Propiedades.modificarPropiedad)
+        var.ui.
 
 
         '''
@@ -74,16 +87,10 @@ class Main(QtWidgets.QMainWindow):
 
         '''
         
-        eventos toolbar
-        '''
-        var.ui.actionbarSalir.triggered.connect(eventos.Eventos.mensajeSalir)
-        var.ui.actionbarLimpiar.triggered.connect(eventos.Eventos.limpiarPanel)
-
-        '''
-        
         eventos checkbox
         '''
         var.ui.chkHistoriacli.stateChanged.connect(clientes.Clientes.historicoCli)
+        var.ui.chkHistoricoprop.stateChanged.connect(propiedades.Propiedades.historicoProp)
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication([])

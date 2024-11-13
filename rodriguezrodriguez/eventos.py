@@ -1,6 +1,8 @@
 import os
 import re
 import sys
+
+import propiedades
 from venAux import *
 from datetime import datetime
 import locale
@@ -137,14 +139,12 @@ class Eventos:
         try:
             header = var.ui.tablaPropiedades.horizontalHeader()
             for i in range(header.count()):
-                if (i == 1 or i == 2 or i == 5):
+                if (i == 1 or i == 2):
                     header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeMode.Stretch)
                 else:
                     header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeMode.ResizeToContents)
-                header_items = var.ui.tablaClientes.horizontalHeaderItem(i)
-                font = header_items.font()
-                font.setBold(True)
-                header_items.setFont(font)
+            #header_items = var.ui.tablaClientes.horizontalHeaderItem(i)
+
         except Exception as e:
             print("error en resize tabla clientes: ", e)
 
@@ -164,7 +164,8 @@ class Eventos:
                 mbox.setWindowIcon(QtGui.QIcon('./img/logo.ico'))
                 mbox.setWindowTitle('Copia Seguridad')
                 mbox.setText("Copia Seguridad Creada")
-                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.setStandardButtons(
+                    QtWidgets.QMessageBox.StandardButton.Ok)
                 mbox.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
                 mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
                 mbox.exec()
@@ -185,7 +186,8 @@ class Eventos:
                 mbox.setWindowIcon(QtGui.QIcon('./img/logo.ico'))
                 mbox.setWindowTitle('Copia Seguridad')
                 mbox.setText("Copia Seguridad Restaurada")
-                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.setStandardButtons(
+                    QtWidgets.QMessageBox.StandardButton.Ok)
                 mbox.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
                 mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
                 mbox.exec()
@@ -197,7 +199,8 @@ class Eventos:
 
 
     def limpiarPanel(self):
-        objetospanelcli = [var.ui.txtDnicli, var.ui.txtAltacli, var.ui.txtApelcli, var.ui.txtNomcli, var.ui.txtEmailcli,var.ui.txtMovilcli, var.ui.txtDircli, var.ui.cmbProvcli, var.ui.cmbMunicli, var.ui.txtBajacli]
+        objetospanelcli = [var.ui.txtDnicli, var.ui.txtAltacli, var.ui.txtApelcli, var.ui.txtNomcli, var.ui.txtEmailcli,
+                    var.ui.txtMovilcli, var.ui.txtDircli, var.ui.cmbProvcli, var.ui.cmbMunicli, var.ui.txtBajacli]
         for i,dato in enumerate(objetospanelcli):
             if i == 7 or i == 8:
                 pass
@@ -205,6 +208,24 @@ class Eventos:
                 dato.setText("")
         eventos.Eventos.cargarProv(self)
         var.ui.cmbMunicli.clear()
+        clientes.Clientes.cargaTablaClientes(self)
+        objetospanelprop = [var.ui.lblCodprop, var.ui.txtAltaprop, var.ui.txtBajaprop, var.ui.txtDirprop,
+                         var.ui.txtSuperprop, var.ui.txtPrecioalquilerprop, var.ui.txtPrecioventaprop,
+                         var.ui.txtCPprop, var.ui.txtObservaprop, var.ui.txtNomeprop, var.ui.txtMovilprop ]
+        for i,dato in enumerate(objetospanelprop):
+            dato.setText("")
+        var.ui.cmbProvprop.clear()
+        eventos.Eventos.cargarProv(self)
+        var.ui.cmbMuniprop.clear()
+        eventos.Eventos.cargaMuniprop(self)
+        var.ui.cmbTipoprop.clear()
+        eventos.Eventos.cargarTipoprop(self)
+        var.ui.spnHabprop.setValue(0)
+        var.ui.spnBanprop.setValue(0)
+        var.ui.chkAlquiprop.setChecked(False)
+        var.ui.chkVentaprop.setChecked(False)
+        var.ui.chkInterprop.setChecked(False)
+        propiedades.Propiedades.cargaTablaPropiedades(self)
 
     def abrirTipoprop(self):
         try:
