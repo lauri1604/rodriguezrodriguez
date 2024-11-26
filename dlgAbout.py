@@ -51,5 +51,5 @@ class Ui_dlgAbout(object):
         dlgAbout.setWindowTitle(_translate("dlgAbout", "Acerca de..."))
         self.label.setText(_translate("dlgAbout", "<a href=\"http://www.iesteis.es\">IES de Teis</a>"))
         self.label_2.setText(_translate("dlgAbout", "Copyright 2024 "))
-        self.label_3.setText(_translate("dlgAbout", "Autor: Juan Carlos Pérez González"))
+        self.label_3.setText(_translate("dlgAbout", "Autor: Laura María Rodríguez Rodríguez"))
         self.btnCerrarAbout.setText(_translate("dlgAbout", "Cerrar"))
