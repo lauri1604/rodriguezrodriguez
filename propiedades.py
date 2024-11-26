@@ -212,7 +212,7 @@ class Propiedades():
         try:
             op = True
             modifprop = [var.ui.lblCodprop.text(), var.ui.txtAltaprop.text(), var.ui.txtBajaprop.text(),
-                         var.ui.txtDirprop.text(), var.ui.cmbProvprop.currentText(), var.ui.cmbMuniprop.currentText(),
+                         var.ui.txtDirprop.text().title(), var.ui.cmbProvprop.currentText(), var.ui.cmbMuniprop.currentText(),
                          var.ui.cmbTipoprop.currentText(), var.ui.spnHabprop.text(), var.ui.spnBanprop.text(),
                          var.ui.txtSuperprop.text().split(' ')[0], var.ui.txtPrecioalquilerprop.text().split(' ')[0],
                          var.ui.txtPrecioventaprop.text().split(' ')[0], var.ui.txtCPprop.text(),var.ui.txtObservaprop.toPlainText() ]
