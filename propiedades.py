@@ -231,7 +231,7 @@ class Propiedades():
                 modifprop.append(var.ui.rbtAlquiprop.text())
             elif var.ui.rbtVentaprop.isChecked():
                 modifprop.append(var.ui.rbtVentaprop.text())
-            modifprop.append(var.ui.txtNomeprop.text())
+            modifprop.append(var.ui.txtNomeprop.text().title())
             modifprop.append(var.ui.txtMovilprop.text())
             # if conexionserver.ConexionServer.modifCliente(modifcli) and op == True:
             if conexion.Conexion.modifPropiedad(modifprop):

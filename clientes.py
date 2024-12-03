@@ -7,6 +7,9 @@ import var
 from PyQt6 import QtWidgets, QtGui, QtCore
 
 class Clientes:
+    def __init__(self):
+        self.valor = 0
+
     def checkDNI(dni):
         try:
             dni = str(dni).upper()
@@ -48,10 +51,9 @@ class Clientes:
     def altaCliente(self):
         try:
             op = 0
-            nuevocli = [var.ui.txtDnicli.text(), var.ui.txtAltacli.text(), var.ui.txtApelcli.text(), var.ui.txtNomcli.text(),
-                 var.ui.txtEmailcli.text(), var.ui.txtMovilcli.text(), var.ui.txtDircli.text(),var.ui.cmbProvcli.currentText(),
+            nuevocli = [var.ui.txtDnicli.text(), var.ui.txtAltacli.text(), var.ui.txtApelcli.text().title(), var.ui.txtNomcli.text().title(),
+                 var.ui.txtEmailcli.text(), var.ui.txtMovilcli.text(), var.ui.txtDircli.text().title(),var.ui.cmbProvcli.currentText(),
                  var.ui.cmbMunicli.currentText()]
-
             if nuevocli[0] != "" and nuevocli[1] != "" and nuevocli[2] != "" and nuevocli[3] != ""  and nuevocli[5] != "" and nuevocli[6] != "" and nuevocli[7] != "" and nuevocli[8]!= "":
                 op = 1
 
@@ -92,10 +94,14 @@ class Clientes:
     @staticmethod
     def cargaTablaClientes(self):
         try:
-            listado = conexion.Conexion.listadoClientes(self)
+            listadocli = conexion.Conexion.listadoClientes(self)
+            var.long = len(listadocli)
             #listado = conexionserver.ConexionServer.listadoClientes(self)
+            start_index = var.paginacli * var.clientesxpagina
+            end_index = start_index + var.clientesxpagina
+            listado_pagina = listadocli[start_index:end_index]
             index = 0
-            for registro in listado:
+            for registro in listado_pagina:
                 var.ui.tablaClientes.setRowCount(index + 1)
                 var.ui.tablaClientes.setItem(index, 0, QtWidgets.QTableWidgetItem(str(registro[0])))
                 var.ui.tablaClientes.setItem(index, 1, QtWidgets.QTableWidgetItem(str(registro[2])))
@@ -114,6 +120,19 @@ class Clientes:
                 index += 1
         except Exception as e:
             print("error cargaTablaCientes", e)
+
+    def nextCli(self):
+        try:
+            if (var.paginacli + 1) * var.clientesxpagina < var.long:
+                var.paginacli += 1
+                Clientes.cargaTablaClientes(self)
+        except Exception as e:
+            print("error next boton", e)
+
+    def prevCli(self):
+        if var.paginacli > 0:
+            var.paginacli -= 1
+            Clientes.cargaTablaClientes(self)
 
     def cargaOneCliente(self):
         try:
@@ -137,7 +156,7 @@ class Clientes:
     def modifCliente(self):
         try:
             op = True
-            modifcli = [var.ui.txtDnicli.text(), var.ui.txtAltacli.text(), var.ui.txtApelcli.text(),
+            modifcli = [var.ui.txtDnicli.text(), var.ui.txtAltacli.text(), var.ui.txtApelcli.text().title(),
                         var.ui.txtNomcli.text().title(), var.ui.txtEmailcli.text(), var.ui.txtMovilcli.text(), var.ui.txtDircli.text().title(),
                         var.ui.cmbProvcli.currentText(), var.ui.cmbMunicli.currentText(), var.ui.txtBajacli.text()]
             for i, dato in enumerate(modifcli):
@@ -184,7 +203,7 @@ class Clientes:
             else:
                 op = False
             if op == True:
-                (conexion.Conexion.bajaCliente(datos))
+                conexion.Conexion.bajaCliente(datos)
                 var.ui.txtBajacli.setText(datetime.now().strftime("%d/%d/%Y"))
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
@@ -245,7 +264,8 @@ class Clientes:
                 mbox.setWindowIcon(QtGui.QIcon('./img/logo.ico'))
                 mbox.setWindowTitle('Aviso')
                 mbox.setText(mensaje)
-                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.setStandardButtons(
+                    QtWidgets.QMessageBox.StandardButton.Ok)
                 mbox.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
                 mbox.button(QtWidgets.QMessageBox.StandardButton.Ok).setText('Aceptar')
                 mbox.exec()

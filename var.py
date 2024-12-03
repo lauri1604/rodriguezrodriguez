@@ -12,3 +12,6 @@ global dlggestion
 global dlgabout
 global tipo
 global historiaprop
+global clientesxpagina
+global paginacli
+global long

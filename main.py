@@ -25,6 +25,9 @@ class Main(QtWidgets.QMainWindow):
         conexion.Conexion.db_conexion(self)
         var.historico = 1
         var.historiaprop = 1
+        var.paginacli = 0
+        var.clientesxpagina = 15
+        var.long = 0
         #conexionserver.ConexionServer.crear_conexion(self)
         clientes.Clientes.cargaTablaClientes(self)
         propiedades.Propiedades.cargaTablaPropiedades(self)
@@ -71,6 +74,8 @@ class Main(QtWidgets.QMainWindow):
         var.ui.btnDelprop.clicked.connect(propiedades.Propiedades.bajaPropiedad)
         var.ui.btnModifprop.clicked.connect(propiedades.Propiedades.modificarPropiedad)
         var.ui.btnBuscacli.clicked.connect(clientes.Clientes.buscaCli)
+        var.ui.btnNextClie.clicked.connect(clientes.Clientes.nextCli)
+        var.ui.btnPrevCli.clicked.connect(clientes.Clientes.prevCli)
 
         '''
               
