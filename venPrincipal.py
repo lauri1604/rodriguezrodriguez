@@ -12,7 +12,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_venPrincipal(object):
     def setupUi(self, venPrincipal):
         venPrincipal.setObjectName("venPrincipal")
-        venPrincipal.resize(1690, 920)
+        venPrincipal.resize(1590, 920)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(".\\\\templates\\../img/logo.ico"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         venPrincipal.setWindowIcon(icon)
@@ -674,7 +674,7 @@ class Ui_venPrincipal(object):
         self.gridLayout_5.addWidget(self.line_4, 4, 0, 2, 1)
         self.tablaPropiedades = QtWidgets.QTableWidget(parent=self.layoutWidget1)
         self.tablaPropiedades.setMinimumSize(QtCore.QSize(1250, 350))
-        self.tablaPropiedades.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        self.tablaPropiedades.setMaximumSize(QtCore.QSize(1490, 350))
         self.tablaPropiedades.setEditTriggers(QtWidgets.QAbstractItemView.EditTrigger.NoEditTriggers)
         self.tablaPropiedades.setAlternatingRowColors(True)
         self.tablaPropiedades.setSelectionMode(QtWidgets.QAbstractItemView.SelectionMode.SingleSelection)
