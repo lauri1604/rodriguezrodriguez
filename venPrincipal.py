@@ -593,7 +593,7 @@ class Ui_venPrincipal(object):
         self.label_4.setObjectName("label_4")
         self.gridLayout_4.addWidget(self.label_4, 3, 13, 1, 1)
         self.rbtDisponprop = QtWidgets.QRadioButton(parent=self.layoutWidget)
-        self.rbtDisponprop.setMinimumSize(QtCore.QSize(80, 0))
+        self.rbtDisponprop.setMinimumSize(QtCore.QSize(85, 0))
         self.rbtDisponprop.setMaximumSize(QtCore.QSize(80, 16777215))
         font = QtGui.QFont()
         font.setBold(True)
