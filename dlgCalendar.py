@@ -8,7 +8,6 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-
 class Ui_dlgCalendar(object):
     def setupUi(self, dlgCalendar):
         dlgCalendar.setObjectName("dlgCalendar")

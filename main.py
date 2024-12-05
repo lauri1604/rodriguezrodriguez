@@ -26,8 +26,12 @@ class Main(QtWidgets.QMainWindow):
         var.historico = 1
         var.historiaprop = 1
         var.paginacli = 0
+        var.paginaprop = 0
         var.clientesxpagina = 15
-        var.long = 0
+        var.propiedadesxpagina = 10
+        var.longcli = 0
+        var.longprop = 0
+        var.ui.btnPrevCli.setStyleSheet("background-color: #A9C0D6;")
         #conexionserver.ConexionServer.crear_conexion(self)
         clientes.Clientes.cargaTablaClientes(self)
         propiedades.Propiedades.cargaTablaPropiedades(self)
@@ -40,7 +44,6 @@ class Main(QtWidgets.QMainWindow):
 
         var.ui.tablaClientes.clicked.connect(clientes.Clientes.cargaOneCliente)
         var.ui.tablaPropiedades.clicked.connect(propiedades.Propiedades.cargaOnepropiedad)
-
 
         '''
         
@@ -58,7 +61,6 @@ class Main(QtWidgets.QMainWindow):
         var.ui.actionExportar_Propiedades_JSON.triggered.connect(eventos.Eventos.exportJSONprop)
         var.ui.actionAcerca_de.triggered.connect(eventos.Eventos.abrirAbout)
 
-
         '''
         
         eventos de botones
@@ -74,8 +76,8 @@ class Main(QtWidgets.QMainWindow):
         var.ui.btnDelprop.clicked.connect(propiedades.Propiedades.bajaPropiedad)
         var.ui.btnModifprop.clicked.connect(propiedades.Propiedades.modificarPropiedad)
         var.ui.btnBuscacli.clicked.connect(clientes.Clientes.buscaCli)
-        var.ui.btnNextClie.clicked.connect(clientes.Clientes.nextCli)
-        var.ui.btnPrevCli.clicked.connect(clientes.Clientes.prevCli)
+        var.ui.btnNextCli.clicked.connect(eventos.Eventos.nextCli)
+        var.ui.btnPrevCli.clicked.connect(eventos.Eventos.prevCli)
 
         '''
               

@@ -22,6 +22,10 @@ QPushButton {
     color: white;
     border-radius: 5px;
 }
+QPushButton:disabled {
+    background-color: #A9C0D6;
+    color: #D3D3D3;
+}
 QTableWidget{
     background-color: whitesmoke;
     color: black;

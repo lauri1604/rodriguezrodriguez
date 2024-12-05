@@ -94,10 +94,13 @@ class Propiedades():
     def cargaTablaPropiedades(self):
         try:
             listado = conexion.Conexion.listadoPropiedades(self)
+            var.longprop = len(listado)
             #listado = conexionserver.ConexionServer.listadoClientes(self)
-
+            start_index = var.paginaprop * var.propiedadesxpagina
+            end_index = start_index + var.propiedadesxpagina
+            listado_pagina = listado[start_index:end_index]
             index = 0
-            for registro in listado:
+            for registro in listado_pagina:
                 var.ui.tablaPropiedades.setRowCount(index + 1)
                 var.ui.tablaPropiedades.setItem(index, 0, QtWidgets.QTableWidgetItem(str(registro[0])))
                 var.ui.tablaPropiedades.setItem(index, 1, QtWidgets.QTableWidgetItem(registro[5]))

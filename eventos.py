@@ -56,7 +56,7 @@ class Eventos:
         try:
             provincia = var.ui.cmbProvcli.currentText()
             listado = conexion.Conexion.listaMuniProv(provincia)
-            #listado = conexionserver.ConexionServer.listaMuniProv(provincia)
+            #istado = conexionserver.ConexionServer.listaMuniProv(provincia)
             var.ui.cmbMunicli.clear()
             var.ui.cmbMunicli.addItems(listado)
         except Exception as e:
@@ -204,7 +204,6 @@ class Eventos:
         except Exception as error:
             print("error en resturar backup: ", error)
 
-
     def limpiarPanel(self):
         try:
             objetospanelcli = [var.ui.txtDnicli, var.ui.txtAltacli, var.ui.txtApelcli, var.ui.txtNomcli, var.ui.txtEmailcli,
@@ -315,3 +314,57 @@ class Eventos:
 
     def cerrarAbout(self):
         var.dlgabout.hide()
+
+    def nextCli(self):
+        try:
+            if  var.ui.panPrincipal.currentIndex() == 0:
+                if (var.paginacli + 1) * var.clientesxpagina < var.longcli:
+                    var.paginacli += 1
+                    clientes.Clientes.cargaTablaClientes(self)
+                    if (var.paginacli + 1) * var.clientesxpagina >= var.longcli:
+                        var.ui.btnNextCli.setStyleSheet("background-color: #A9C0D6;")
+                        var.ui.btnPrevCli.setStyleSheet("background-color:  #4682B4;")
+                    else:
+                        var.ui.btnNextCli.setStyleSheet("background-color: #4682B4;;")
+                        var.ui.btnPrevCli.setStyleSheet("background-color: #4682B4;")
+            if  var.ui.panPrincipal.currentIndex() == 1:
+                if (var.paginaprop + 1) * var.propiedadesxpagina < var.longprop:
+                    #var.ui.btnNextCli.setEnable(True)
+                    var.paginaprop += 1
+                    propiedades.Propiedades.cargaTablaPropiedades(self)
+                    if (var.paginaprop + 1) * var.propiedadesxpagina >= var.longprop:
+                        var.ui.btnNextCli.setStyleSheet("background-color: #A9C0D6;")
+                        var.ui.btnPrevCli.setStyleSheet("background-color:  #4682B4;")
+                    else:
+                        var.ui.btnNextCli.setStyleSheet("background-color: #4682B4;;")
+                        var.ui.btnPrevCli.setStyleSheet("background-color: #4682B4;")
+        except Exception as e:
+            print("error next boton", e)
+
+    def prevCli(self):
+        try:
+            if var.ui.panPrincipal.currentIndex() == 0:
+                if var.paginacli > 0:
+                    var.paginacli -= 1
+                    clientes.Clientes.cargaTablaClientes(self)
+                    #var.ui.btnPrevCli.setEnabled(True)
+                    if var.paginacli <= 0:
+                        var.ui.btnPrevCli.setStyleSheet("background-color: #A9C0D6;")
+                        var.ui.btnNextCli.setStyleSheet("background-color: #4682B4;")
+                    else:
+                        var.ui.btnNextCli.setStyleSheet("background-color:  #4682B4;")
+                        var.ui.btnPrevCli.setStyleSheet("background-color:  #4682B4;")
+            if  var.ui.panPrincipal.currentIndex() == 1:
+                if var.paginaprop > 0:
+                    #var.ui.btnPrevCli.setDisable(False)
+                    var.paginaprop -= 1
+                    propiedades.Propiedades.cargaTablaPropiedades(self)
+                    if var.paginaprop <= 0:
+                        var.ui.btnPrevCli.setStyleSheet("background-color: #A9C0D6;")
+                        var.ui.btnNextCli.setStyleSheet("background-color: #4682B4;")
+                    else:
+                        var.ui.btnNextCli.setStyleSheet("background-color:  #4682B4;")
+                        var.ui.btnPrevCli.setStyleSheet("background-color:  #4682B4;")
+
+        except Exception as e:
+            print("error prev boton", e)

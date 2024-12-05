@@ -32,7 +32,7 @@ class Clientes:
            else:
                 var.ui.txtEmailcli.setStyleSheet('background-color:#FFC0CB; font-style: italic;')
                 var.ui.txtEmailcli.setText(None)
-                var.ui.txtEmailcli.setText("correo no válido")
+                var.ui.txtEmailcli.setPlaceholderText("correo no válido")
                 var.ui.txtEmailcli.setFocus()
         except Exception as error:
             print("error check cliente", error)
@@ -43,7 +43,8 @@ class Clientes:
                 var.ui.txtMovilcli.setStyleSheet('background-color: rgb(255, 255, 239);')
            else:
                 var.ui.txtMovilcli.setStyleSheet('background-color:#FFC0CB; font-style: italic;')
-                var.ui.txtMovilcli.setText("Movil no válido")
+                var.ui.txtMovilcli.setText(None)
+                var.ui.txtMovilcli.setPlaceholderText("móvil no válido")
                 var.ui.txtMovilcli.setFocus()
         except Exception as error:
             print("error check cliente", error)
@@ -95,7 +96,7 @@ class Clientes:
     def cargaTablaClientes(self):
         try:
             listadocli = conexion.Conexion.listadoClientes(self)
-            var.long = len(listadocli)
+            var.longcli = len(listadocli)
             #listado = conexionserver.ConexionServer.listadoClientes(self)
             start_index = var.paginacli * var.clientesxpagina
             end_index = start_index + var.clientesxpagina
@@ -121,23 +122,9 @@ class Clientes:
         except Exception as e:
             print("error cargaTablaCientes", e)
 
-    def nextCli(self):
-        try:
-            if (var.paginacli + 1) * var.clientesxpagina < var.long:
-                var.paginacli += 1
-                Clientes.cargaTablaClientes(self)
-        except Exception as e:
-            print("error next boton", e)
-
-    def prevCli(self):
-        if var.paginacli > 0:
-            var.paginacli -= 1
-            Clientes.cargaTablaClientes(self)
-
     def cargaOneCliente(self):
         try:
             fila = var.ui.tablaClientes.selectedItems()
-
             datos = [dato.text() for dato in fila]
             registro = conexion.Conexion.datosOneCliente(str(datos[0]))
             #registro = conexionserver.ConexionServer.datosOneCliente(str(datos[0]))

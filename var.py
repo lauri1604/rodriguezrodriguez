@@ -14,4 +14,7 @@ global tipo
 global historiaprop
 global clientesxpagina
 global paginacli
-global long
+global paginaprop
+global longcli
+global longprop
+global propiedadesxpagina
