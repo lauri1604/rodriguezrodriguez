@@ -18,3 +18,4 @@ global paginaprop
 global longcli
 global longprop
 global propiedadesxpagina
+global report
